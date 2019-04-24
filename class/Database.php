@@ -1,7 +1,6 @@
 <?php
 
 session_start();
-<<<<<<< HEAD
 $con = mysqli_connect('localhost','root','');
 mysqli_select_db($con,'users');
 
@@ -31,21 +30,4 @@ if(!empty($name) && !empty($password) && !empty($phone) && !empty($dept) && !emp
 else
 echo "Enter required fields";
 
-=======
-$con = mysqli_connect('localhost','root','','users');
-
-
-if(isset($_POST['submit'])){
-$name=$_POST['username'];
-$password=$_POST['password'];
-$fullname=$_POST['fullname'];
-$phone=$_POST['phone'];
-$dept=$_POST['dept'];
-
-$sql= "INSERT INTO `accounts`(`Fullname`, `Username`, `Password`, `Phone`, `Dept`) VALUES ([$fullname],[$name],[$password],[$phone],[$dept])";
-mysqli_query($con,$sql);
-echo "fuck man";
-}
-# $_SESSION['message'] = "You have Successfully signed up !" ;
->>>>>>> ccd1e82c4bbe74f97deec68c22b3193038bdcc42
 ?>
