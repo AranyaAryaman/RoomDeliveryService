@@ -9,7 +9,11 @@ body{
 
 .signupbox{
   width: 380px;
+<<<<<<< HEAD
   height: 650px;
+=======
+  height: 585px;
+>>>>>>> ccd1e82c4bbe74f97deec68c22b3193038bdcc42
   background: #000;
   color: #fff;
   top: 50%;

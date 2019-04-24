@@ -24,10 +24,13 @@
         <input type="password" name="password" placeholder="Enter Password">
         </div>
         <div class="form_input">
+<<<<<<< HEAD
         <p>Confirm Password</p>
         <input type="password" name="password2" placeholder="Enter the password again">
         </div>
         <div class="form_input">
+=======
+>>>>>>> ccd1e82c4bbe74f97deec68c22b3193038bdcc42
         <p>Phone Number</p>
         <input type="text" name="phone" placeholder="Enter Your Phone Number">
         </div>
