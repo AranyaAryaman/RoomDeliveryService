@@ -20,20 +20,33 @@ if(!empty($name) && !empty($password) && !empty($phone) && !empty($dept) && !emp
         echo " Username already taken";
     }
     else{
-       $querry= "SELECT COUNT(*) FROM accounts";
-       mysqli_query($con,$querry);
-       $result2 = mysqli_query($con,$querry);
-       $row=mysqli_fetch_array($result2);
-      // echo "$row[0]";
-       $reg= "INSERT into accounts(`UserID`,`Fullname`, `Username`, `Password`, `Phone`, `Dept`) values ('$row[0]+1','$fullname','$name','$password','$phone','$dept')";
-       mysqli_query($con,$reg);
-       echo "Registration Successful";
-       //header("Location:localhost/");
+          $querry= "SELECT COUNT(*) FROM accounts";
+          mysqli_query($con,$querry);
+          $result2 = mysqli_query($con,$querry);
+         $row=mysqli_fetch_array($result2);
+         // echo "$row[0]";
+          $row[0] += 1;
+          $reg= "INSERT into accounts(`UserID`,`Fullname`, `Username`, `Password`, `Phone`, `Dept`) values ('$row[0]','$fullname','$name','$password','$phone','$dept')";
+          mysqli_query($con,$reg);
+          $result3 = mysqli_query($con,$reg);
+          echo "<script type='text/javascript'>alert('Registration Successful!')</script>";
+         //$num2 = mysqli_affected_rows($result3);
+      //   if($result3 == true){
+      //  //echo "Registration Successful"
+      //     echo "<script type='text/javascript'>alert('Registration Successful!')</script>";
+      // // header("Location: Welcome.php");
+      //   }
+      //   else{
+      //    echo "<script type='text/javascript'>alert('Registration Failed!')</script>";
+      //   }
+     }
+    }
+    else {
+      echo "<script type='text/javascript'>alert('The Passwords don't match!')</script>";
     }
   }
-  else echo "Password doesn't match";
+else{
+    echo "<script type='text/javascript'>alert('Enter the required fields')</script>";
 }
-else
-echo "Enter required fields";
 
 ?>
