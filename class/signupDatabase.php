@@ -4,6 +4,8 @@ session_start();
 $con = mysqli_connect('localhost','root','');
 mysqli_select_db($con,'users');
 
+if(isset($_POST['submit'])){
+
 $name=$_POST['username'];
 $password=$_POST['password'];
 $password2=$_POST['password2'];
@@ -29,7 +31,9 @@ if(!empty($name) && !empty($password) && !empty($phone) && !empty($dept) && !emp
           $reg= "INSERT into accounts(`UserID`,`Fullname`, `Username`, `Password`, `Phone`, `Dept`) values ('$row[0]','$fullname','$name','$password','$phone','$dept')";
           mysqli_query($con,$reg);
           $result3 = mysqli_query($con,$reg);
-          echo "<script type='text/javascript'>alert('Registration Successful!')</script>";
+          $_SESSION['user_id']= $name;
+          header("Location: Welcome.php");
+
          //$num2 = mysqli_affected_rows($result3);
       //   if($result3 == true){
       //  //echo "Registration Successful"
@@ -45,8 +49,8 @@ if(!empty($name) && !empty($password) && !empty($phone) && !empty($dept) && !emp
       echo "<script type='text/javascript'>alert('The Passwords don't match!')</script>";
     }
   }
-else{
+  else{
     echo "<script type='text/javascript'>alert('Enter the required fields')</script>";
+  }
 }
-
 ?>
