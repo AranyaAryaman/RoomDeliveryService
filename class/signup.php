@@ -2,15 +2,15 @@
 <html>
 <head>
 <title> Signup Page </title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="styleSignup.css">
     </head>
 <body>
     <div class= "signupbox">
       <img src="avatar.png" class="avatar">
       <h1>
-        Register Now
+        Register Here
       </h1>
-      <form action="Database.php" method="POST" >
+      <form action="signupDatabase.php" method="POST" >
         <div class="form_input">
         <p>Name</p>
         <input type="text" name="fullname" placeholder="Enter Your Name">
@@ -25,7 +25,7 @@
         </div>
         <div class="form_input">
         <p>Confirm Password</p>
-        <input type="password" name="password2" placeholder="Enter the password again">
+        <input type="password" name="password2" placeholder="Re-enter your Password">
         </div>
         <div class="form_input">
         <p>Phone Number</p>
