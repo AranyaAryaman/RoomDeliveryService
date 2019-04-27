@@ -19,7 +19,7 @@
         $_SESSION["Welcome"][$count] = $item_array;
         // echo '<script>window.location="Welcome.php"</script>';
       }else{
-        echo '<script>Product is already added to cart</script>';
+        echo '<script>alert("Product is already added to cart")</script>';
         echo '<script>window.location="Welcome.php"></script>';
       }
     }
@@ -53,7 +53,7 @@
 
 <html>
 <head>
-  <title> Place Your Order </title>
+  <title>  Place Your Order </title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -62,9 +62,10 @@
 <body>
   <br />
     <div class="container" style="width:700px;">
-      <h2 align="center">Place Your Order</h2>
-      <?php
-        $query = "SELECT * FROM items WHERE ItemQuantity > 0";
+      <h2 align="center"><font color="#660000"><u> Place Your Order </u> </font> </h2>
+      <br>
+    <?php
+        $query = "SELECT * FROM items WHERE ItemQuantity > 0 OR ItemQuantity = 'Unlimited' ";
         $result = mysqli_query($con,$query);
         $num = mysqli_num_rows($result);
         if( $num >0){
@@ -77,7 +78,8 @@
                   <div class = "product">
                     <h4 class = "text-info"><?php echo $row["ItemName"]; ?></h4>
                     <h4 class="text-danger">Rs. <?php echo  $row["ItemPrice"]; ?></h4>
-                    <input type = "text" name="quantity" class="form-control" value="1" >
+                    <h4 class="text-danger">Available: <?php echo  $row["ItemQuantity"]; ?></h4>
+                    <input type = "text" name="quantity" class="form-control" value="0" >
                     <input type="hidden" name="hidden_name" value="<?php echo$row["ItemName"]; ?>">
                     <input type="hidden" name="hidden_price" value="<?php echo$row["ItemPrice"]; ?>">
                     <input type="submit" name="add" style="margin-top: 5px;" class="btn btn-success" value="Add to Cart" />
@@ -90,8 +92,8 @@
       ?>
 
       <div style="clear: both"></div>
-      <br />
-      <h3> Shopping Cart Details </h3>
+      <br /> <br>
+      <h3 align="center"><u> <font color="#660000">Shopping Cart Details </font> </u></h3>
       <div class="table-responsive">
         <table class="table table-bordered">
         <tr>
@@ -130,6 +132,6 @@
           </table>
           </div>
     </div>
-    <br />
+    <br
 </body>
 </html>
