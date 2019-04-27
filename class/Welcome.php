@@ -6,10 +6,10 @@
   if(isset($_POST["add"])){
     if(isset($_SESSION["Welcome"])){
 
-      $item_array_id = array_column($_SESSION["Welcome"],"item_id");
+      $item_array_id = array_column($_SESSION["Welcome"],"ItemID");
 
       if(!in_array($_GET["id"],$item_array_id)){
-        $count = count($_SESSION("Welcome"));
+        $count = count($_SESSION["Welcome"]);
         $item_array = array(
           'ItemID' => $_GET["id"],
           'ItemName' => $_POST["hidden_name"],
@@ -17,7 +17,7 @@
           'ItemQuantity' => $_POST["quantity"],
         );
         $_SESSION["Welcome"][$count] = $item_array;
-        echo '<script>window.location="Welcome.php"</script>';
+        // echo '<script>window.location="Welcome.php"</script>';
       }else{
         echo '<script>Product is already added to cart</script>';
         echo '<script>window.location="Welcome.php"></script>';
@@ -38,10 +38,12 @@
 
   if(isset($_GET["action"])){
     if($_GET["action"] == "delete"){
-      foreach ($_SESSION as $keys => $value) {
+      foreach ($_SESSION["Welcome"] as $keys => $value) {
+
         if($value["ItemID"] == $_GET["id"]){
           unset($_SESSION["Welcome"][$keys]);
           echo '<script> alert("Product has been removed.") </script>';
+          echo '<script>window.location="Welcome.php"</script>';
         }
       }
     }
@@ -52,57 +54,24 @@
 <html>
 <head>
   <title> Place Your Order </title>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-  <style>
-    @import url('https://fonts.googleapis.com/css?family=Titillium+Web');
-    *{
-      font-family: 'Titillium Web', sans-serif;
-    }
-    .product{
-      border: 1px solid #eaeaec;
-      margin: -1px 19px 3px -1px;
-      padding 10px;
-      text-align: center;
-      background-color: #efefef;
-    }
-
-    table, th, tr{
-      text-align: center;
-    }
-
-    .title2{
-      text-align: center;
-      color: #66afe9;
-      background-color: #efefef;
-      padding: 2%;
-    }
-    h2{
-      text-align: center;
-      color: #66afe9;
-      background-color: #efefef;
-      padding: 2%;
-    }
-
-  table th{
-    background-color: #efefef;
-  }
-
-  </style>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
+
 <body>
-    <div class="container" style="width: 65%">
-      <h2>Place Your Order</h2>
+  <br />
+    <div class="container" style="width:700px;">
+      <h2 align="center">Place Your Order</h2>
       <?php
         $query = "SELECT * FROM items WHERE ItemQuantity > 0";
         $result = mysqli_query($con,$query);
         $num = mysqli_num_rows($result);
         if( $num >0){
+
             while($row = mysqli_fetch_array($result)){
             ?>
-            <div class="col-md-3">
+            <div class="col-md-4">
               <form method="post" action="Welcome.php?action=add&id=<?php echo $row["ItemID"]; ?>">
 
                   <div class = "product">
@@ -111,7 +80,7 @@
                     <input type = "text" name="quantity" class="form-control" value="1" >
                     <input type="hidden" name="hidden_name" value="<?php echo$row["ItemName"]; ?>">
                     <input type="hidden" name="hidden_price" value="<?php echo$row["ItemPrice"]; ?>">
-                    <input type="submit" name="add" style="margin-top: 5px;" class="btn btn-success" value="Add to Cart">
+                    <input type="submit" name="add" style="margin-top: 5px;" class="btn btn-success" value="Add to Cart" />
                   </div>
                 </form>
               </div>
@@ -122,7 +91,7 @@
 
       <div style="clear: both"></div>
       <br />
-      <h3 class="title2"> Shopping Cart Details </h3>
+      <h3> Shopping Cart Details </h3>
       <div class="table-responsive">
         <table class="table table-bordered">
         <tr>
@@ -136,24 +105,24 @@
         <?php
             if(!empty($_SESSION["Welcome"])){
               $total = 0;
-              foreach ($_SESSION["Welcome"] as $key => $value) {
+              foreach ($_SESSION["Welcome"] as $keys => $value) {
                 // code...
                 ?>
               <tr>
-                <th><?php echo $value["ItemName"]; ?></th>
-                <th><?php echo $value["ItemQuantity"]; ?></th>
-                <th>$ <?php echo $value["ItemPrice"]; ?></th>
-                <th><?php echo number_format($value["ItemQuantity"] * $value["ItemPrice"],2); ?> </th>
-                <th> <a href="Welcome.php?action=delete&id=<?php echo $value["ItemID"]; ?>"><span class="text-danger">Remove Item</span></a></th>
+                <td><?php echo $value["ItemName"]; ?></td>
+                <td><?php echo $value["ItemQuantity"]; ?></td>
+                <td>Rs. <?php echo $value["ItemPrice"]; ?></td>
+                <td><?php echo number_format($value["ItemQuantity"] * $value["ItemPrice"],2); ?> </td>
+                <td> <a href="Welcome.php?action=delete&id=<?php echo $value["ItemID"]; ?>"><span class="text-danger">Remove Item</span></a></td>
               </tr>
               <?php
                 $total = $total + ($value["ItemQuantity"] * $value["ItemPrice"]);
               }
                ?>
                <tr>
-                 <th colspan="3" align="right">Total </th>
-                 <th align="right"> $ <?php echo number_format($total,2); ?></th>
-                 <th></th>
+                 <td colspan="3" align="right">Total </td>
+                 <td align="right"> Rs. <?php echo number_format($total,2); ?></td>
+                 <td></td>
                </tr>
                <?php
              }
@@ -161,9 +130,6 @@
           </table>
           </div>
     </div>
-
-
-
-
+    <br />
 </body>
 </html>
