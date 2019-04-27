@@ -3,8 +3,17 @@
   $con = mysqli_connect('localhost','root','');
   mysqli_select_db($con,'users');
 
+
   if(isset($_POST["add"])){
+    $ids=$_GET["id"];
+    $sql="select * from items where ItemID='".$ids."'  limit 1";
+    $result=mysqli_query($con,$sql);
+    $row=mysqli_fetch_assoc($result);
+    $avail=$row['ItemQuantity'];
+
     if(isset($_SESSION["Welcome"])){
+
+
 
       $item_array_id = array_column($_SESSION["Welcome"],"ItemID");
 
@@ -15,6 +24,7 @@
           'ItemName' => $_POST["hidden_name"],
           'ItemPrice' => $_POST["hidden_price"],
           'ItemQuantity' => $_POST["quantity"],
+          'max' => $avail,
         );
         $_SESSION["Welcome"][$count] = $item_array;
         // echo '<script>window.location="Welcome.php"</script>';
@@ -30,6 +40,7 @@
         'ItemName' => $_POST["hidden_name"],
         'ItemPrice' => $_POST["hidden_price"],
         'ItemQuantity' => $_POST["quantity"],
+        'max' => $avail,
       );
       $_SESSION["Welcome"][0] = $item_array;
     }
@@ -39,12 +50,14 @@
   if(isset($_GET["action"])){
     if($_GET["action"] == "delete"){
       foreach ($_SESSION["Welcome"] as $keys => $value) {
-
+        // if(!$keys='max'){
         if($value["ItemID"] == $_GET["id"]){
           unset($_SESSION["Welcome"][$keys]);
+
           echo '<script> alert("Product has been removed.") </script>';
           echo '<script>window.location="Welcome.php"</script>';
-        }
+
+      }
       }
     }
   }
@@ -110,7 +123,14 @@
                 ?>
               <tr>
                 <td><?php echo $value["ItemName"]; ?></td>
-                <td><?php echo $value["ItemQuantity"]; ?></td>
+                <td><?php
+                if( $value["max"]>= $value["ItemQuantity"] || $value["ItemID"]==1 || $value["ItemID"]==2)
+
+                echo $value["ItemQuantity"];
+                else {
+                  echo "enter again";
+                }
+                 ?></td>
                 <td>Rs. <?php echo $value["ItemPrice"]; ?></td>
                 <td><?php echo number_format($value["ItemQuantity"] * $value["ItemPrice"],2); ?> </td>
                 <td> <a href="Welcome.php?action=delete&id=<?php echo $value["ItemID"]; ?>"><span class="text-danger">Remove Item</span></a></td>
