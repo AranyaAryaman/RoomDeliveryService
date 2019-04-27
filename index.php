@@ -21,15 +21,9 @@
         <input type="password" name="password" placeholder="Enter Your Password">
         </div>
         <input type="submit" name="submit" value="Login">
-        <a href="#">Forgot password?</a><br>
-<<<<<<< HEAD
+        <a href="class/forgot.php">Forgot password?</a><br>
         <a href="class/signup.php">Create a new account</a>
       </form>
-
-=======
-        <a href="#">Create a new account</a>
-      </form>
     </div>
->>>>>>> 05b19adab453911c84684daf5b47187b33357666
 </body>
 </html>
