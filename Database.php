@@ -14,6 +14,7 @@ $num2=mysqli_num_rows($result2);
 if(isset($name)&& isset($password)&& !empty($name) && !empty($password)){
   if($num2==1){
       if($num==1){
+        $_SESSION['user_id']=$name;
           header("Location:class/welcome.php");
           exit();
       }

@@ -4,7 +4,6 @@
   echo "Hello " , $_SESSION['user_id'];
   include_once('signupDatabase.php');
   $query= "SELECT * from items WHERE ItemQuantity > 0 ";
-
   $result = mysqli_query($con,$query);
 ?>
 <html>
@@ -23,8 +22,11 @@
       <th> Selected Quantity </th>
     </tr>
     <?php
+    $i=1;
         while($rows=mysqli_fetch_assoc($result))
         {
+
+
     ?>
         <tr align="center">
           <td>  <?php echo $rows['ItemName']; ?> </td>
@@ -32,23 +34,30 @@
           <td>  <?php echo $rows['ItemQuantity']; ?> </td>
           <td align="center">   <form action="databaseWelcome.php" method="POST" >
               <div class="form_input">
-              <input type="text" name="selected" placeholder="Select Quantity">
+              <input type="text" name="selected <?php echo $i ?>" placeholder="Select Quantity">
+              <?php
+              $selected = $_POST['selected '.$i];
+              $selected = $rows['ItemQuantity'] - $selected;
+              if($selected<0)
+              {?>
+              item is not available in that quantity.Please enter lesser quantity.
+              <?php
+
+              }
+               ?>
+
               </div>
             </td>
           </form>
         </tr>
         <?php
+        $i=$i+1;
       }
       ?>
     </table>
 <br><br><br>
 
-<?php
-  if(isset($_POST['selected'])){
 
-
-  }
-?>
 
 <form action="databaseWelcome.php" method="POST">
   <div class="form_input">
