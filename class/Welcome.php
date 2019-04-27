@@ -3,6 +3,38 @@
   $con = mysqli_connect('localhost','root','');
   mysqli_select_db($con,'users');
 
+if(isset($_POST['confirm'])){
+    $_SESSION['deliver'] = $_POST['address'];
+    $ts = date("Y-m-d H:i:s");
+   $querry= "SELECT COUNT(*) FROM orders";
+     mysqli_query($con,$querry);
+   $result2 = mysqli_query($con,$querry);
+  $row=mysqli_fetch_array($result2);
+
+  $querry2= "SELECT COUNT(*) FROM orderlist";
+    $result = mysqli_query($con,$querry2);
+    $row2 =mysqli_fetch_assoc($result);
+    $time =0;
+
+  if($row2['itemID'] == 1 ){
+    $time = $row2['itemQuantity'];
+  }
+
+  if($row2['itemID'] == 2){
+    $time = $time + $row2['itemQuantity'];
+  }
+
+
+   $row[0] += 1;
+   echo 'Data Inserted'.$time;
+}
+
+?>
+
+
+
+   <font size="5"> <b> <?php echo "Hello " , $_SESSION['user_name']; ?> </b> </font>
+<?php
   if(isset($_POST["add"])){
     if(isset($_SESSION["Welcome"])){
 
@@ -132,6 +164,18 @@
           </table>
           </div>
     </div>
-    <br
+    <br><br><br>
+    <font color="#660000" size="5">
+    <form action = "Welcome.php" method= "POST">
+      <div class="form_input" align="center">
+      <p align="center">Enter Your Address</p>
+      <input type="text" name="address" placeholder="Enter Your Address" >
+      </div>
+      <br><br>
+      <div class="form_input" align="center">
+      <input type="submit" name="confirm" value="Confirm Your Order!">
+      </div>
+    </form>
+    </font>
 </body>
 </html>
