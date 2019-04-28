@@ -3,34 +3,25 @@
   $con = mysqli_connect('localhost','root','');
   mysqli_select_db($con,'users');
 
-if(isset($_POST['confirm'])){
-    $_SESSION['deliver'] = $_POST['address'];
-    $ts = date("Y-m-d H:i:s");
-   $querry= "SELECT COUNT(*) FROM orders";
-     mysqli_query($con,$querry);
-   $result2 = mysqli_query($con,$querry);
-  $row=mysqli_fetch_array($result2);
+  if(isset($_POST['confirm']) && !empty($_POST['confirm'])){
 
-  $querry2= "SELECT COUNT(*) FROM orderlist";
-    $result = mysqli_query($con,$querry2);
-    $row2 =mysqli_fetch_assoc($result);
-    $time =0;
+      
 
-  if($row2['itemID'] == 1 ){
-    $time = $row2['itemQuantity'];
+        // mysqli_select_db($con,'orders');
+        // $querry= "SELECT COUNT(*) FROM orderlist";
+        // $result2 = mysqli_query($con,$querry);
+        // $row=mysqli_fetch_array($result2);
+        // $row[0] = $row[0] + 1;
+
+      foreach ($_SESSION["Welcome"] as $keys => $value) {
+  mysqli_select_db($con,'orderlist');
+    $sql = "INSERT INTO `orderlist`(`orderID`, `itemID`, `itemQuantity`) VALUES ('$row[0]','$value[ItemID]','$value[ItemQuantity]')";
+    mysqli_query($con,$sql);
+    header("location: bill.php");
+
   }
-
-  if($row2['itemID'] == 2){
-    $time = $time + $row2['itemQuantity'];
-  }
-
-
-   $row[0] += 1;
-   echo 'Data Inserted'.$time;
 }
-
 ?>
-
 
 
    <font size="5"> <b> <?php echo "Hello " , $_SESSION['user_name']; ?> </b> </font>
@@ -100,6 +91,7 @@ if(isset($_POST['confirm'])){
         $query = "SELECT * FROM items WHERE ItemQuantity > 0 OR ItemQuantity = 'Unlimited' ";
         $result = mysqli_query($con,$query);
         $num = mysqli_num_rows($result);
+
         if( $num >0){
 
             while($row = mysqli_fetch_array($result)){
@@ -111,7 +103,7 @@ if(isset($_POST['confirm'])){
                     <h4 class = "text-info"><?php echo $row["ItemName"]; ?></h4>
                     <h4 class="text-danger">Rs. <?php echo  $row["ItemPrice"]; ?></h4>
                     <h4 class="text-danger">Available: <?php echo  $row["ItemQuantity"]; ?></h4>
-                    <input type = "text" name="quantity" class="form-control" value="0" >
+                    <input type = "text" name="quantity" class="form-control" value="1" >
                     <input type="hidden" name="hidden_name" value="<?php echo$row["ItemName"]; ?>">
                     <input type="hidden" name="hidden_price" value="<?php echo$row["ItemPrice"]; ?>">
                     <input type="submit" name="add" style="margin-top: 5px;" class="btn btn-success" value="Add to Cart" />
@@ -140,13 +132,13 @@ if(isset($_POST['confirm'])){
             if(!empty($_SESSION["Welcome"])){
               $total = 0;
               foreach ($_SESSION["Welcome"] as $keys => $value) {
-                // code...
                 ?>
               <tr>
                 <td><?php echo $value["ItemName"]; ?></td>
                 <td><?php echo $value["ItemQuantity"]; ?></td>
                 <td>Rs. <?php echo $value["ItemPrice"]; ?></td>
                 <td><?php echo number_format($value["ItemQuantity"] * $value["ItemPrice"],2); ?> </td>
+
                 <td> <a href="Welcome.php?action=delete&id=<?php echo $value["ItemID"]; ?>"><span class="text-danger">Remove Item</span></a></td>
               </tr>
               <?php
@@ -164,14 +156,14 @@ if(isset($_POST['confirm'])){
           </table>
           </div>
     </div>
-    <br><br><br>
+    <br><br>
     <font color="#660000" size="5">
     <form action = "Welcome.php" method= "POST">
       <div class="form_input" align="center">
       <p align="center">Enter Your Address</p>
       <input type="text" name="address" placeholder="Enter Your Address" >
       </div>
-      <br><br>
+      <br>
       <div class="form_input" align="center">
       <input type="submit" name="confirm" value="Confirm Your Order!">
       </div>
