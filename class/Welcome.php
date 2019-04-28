@@ -5,8 +5,15 @@
 
   if(isset($_POST['confirm']) && !empty($_POST['confirm'])){
 
-      
-
+    mysqli_select_db($con,'orders');
+     $querry= "SELECT COUNT(*) FROM orders";
+     $result2 = mysqli_query($con,$querry);
+     $row=mysqli_fetch_array($result2);
+     $row[0] += 1;
+     $temp = time();
+      mysqli_select_db($con,'orders');
+      $q = "INSERT INTO `orders`(`orderID`, `userID`, `userName`, `Address`, `Timestamp`, `Status`, `Amount`, `ExpectedTime`) VALUES ('$row[0]','$_SESSION[user_id]','$_SESSION[user_name]','$address','$temp',0,'$total',20)";
+      mysqli_query($con,$q);
         // mysqli_select_db($con,'orders');
         // $querry= "SELECT COUNT(*) FROM orderlist";
         // $result2 = mysqli_query($con,$querry);
