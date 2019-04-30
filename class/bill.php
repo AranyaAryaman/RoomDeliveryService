@@ -3,7 +3,7 @@
   $con = mysqli_connect('localhost','root','');
   mysqli_select_db($con,'users');
 
-  $sql="select * from orders where userID=2 limit 1 ";
+  $sql="select * from orders where userID=$_SESSION['user_id'] limit 1 ";
   $result=mysqli_query($con,$sql);
   $rown=mysqli_fetch_assoc($result);
   $invoice=$rown['orderID'];
@@ -25,7 +25,7 @@
 ?>
 <html>
 <head>
-  <title>Your Bill </title>
+  <title>Generated Bill</title>
 </head>
 <body>
   <table align="center" border="1px" style="width:600px ; line-height:40px;">

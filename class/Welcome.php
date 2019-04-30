@@ -1,19 +1,25 @@
 <?php
-  session_start();
-  $con = mysqli_connect('localhost','root','');
-  mysqli_select_db($con,'users');
+session_start();
+$con = mysqli_connect('localhost','root','');
+mysqli_select_db($con,'users');
+ ?>
 
+<?php
+      if(isset($_POST["genbill"])){
+        foreach ($_SESSION["Welcome"] as $keys => $value) {
+            mysqli_select_db($con,'users');
+            $sql = "INSERT INTO `orderlist`(`orderID`, `itemID`, `itemQuantity`) VALUES ('$_SESSION[ord_num]','$value[ItemID]','$value[ItemQuantity]')";
+            mysqli_query($con,$sql);
+        }
+      }
+?>
+
+<font size="5"> <b> <i> <?php echo "Hello " , $_SESSION['user_name']; ?> </i> </b> </font>
+
+<?php
 
   if(isset($_POST["add"])){
-    $ids=$_GET["id"];
-    $sql="select * from items where ItemID='".$ids."'  limit 1";
-    $result=mysqli_query($con,$sql);
-    $row=mysqli_fetch_assoc($result);
-    $avail=$row['ItemQuantity'];
-
     if(isset($_SESSION["Welcome"])){
-
-
 
       $item_array_id = array_column($_SESSION["Welcome"],"ItemID");
 
@@ -24,12 +30,11 @@
           'ItemName' => $_POST["hidden_name"],
           'ItemPrice' => $_POST["hidden_price"],
           'ItemQuantity' => $_POST["quantity"],
-          'max' => $avail,
         );
         $_SESSION["Welcome"][$count] = $item_array;
         // echo '<script>window.location="Welcome.php"</script>';
       }else{
-        echo '<script>Product is already added to cart</script>';
+        echo '<script>alert("Product is already added to cart")</script>';
         echo '<script>window.location="Welcome.php"></script>';
       }
     }
@@ -40,7 +45,6 @@
         'ItemName' => $_POST["hidden_name"],
         'ItemPrice' => $_POST["hidden_price"],
         'ItemQuantity' => $_POST["quantity"],
-        'max' => $avail,
       );
       $_SESSION["Welcome"][0] = $item_array;
     }
@@ -50,14 +54,12 @@
   if(isset($_GET["action"])){
     if($_GET["action"] == "delete"){
       foreach ($_SESSION["Welcome"] as $keys => $value) {
-        // if(!$keys='max'){
+
         if($value["ItemID"] == $_GET["id"]){
           unset($_SESSION["Welcome"][$keys]);
-
           echo '<script> alert("Product has been removed.") </script>';
           echo '<script>window.location="Welcome.php"</script>';
-
-      }
+        }
       }
     }
   }
@@ -66,7 +68,7 @@
 
 <html>
 <head>
-  <title> Place Your Order </title>
+  <title>  Place Your Order </title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -75,11 +77,13 @@
 <body>
   <br />
     <div class="container" style="width:700px;">
-      <h2 align="center">Place Your Order</h2>
-      <?php
-        $query = "SELECT * FROM items WHERE ItemQuantity > 0";
+      <h2 align="center"><font color="#660000"><u> Place Your Order </u> </font> </h2>
+      <br>
+    <?php
+        $query = "SELECT * FROM items WHERE ItemQuantity > 0 OR ItemQuantity = 'Unlimited' ";
         $result = mysqli_query($con,$query);
         $num = mysqli_num_rows($result);
+
         if( $num >0){
 
             while($row = mysqli_fetch_array($result)){
@@ -90,6 +94,7 @@
                   <div class = "product">
                     <h4 class = "text-info"><?php echo $row["ItemName"]; ?></h4>
                     <h4 class="text-danger">Rs. <?php echo  $row["ItemPrice"]; ?></h4>
+                    <h4 class="text-danger">Available: <?php echo  $row["ItemQuantity"]; ?></h4>
                     <input type = "text" name="quantity" class="form-control" value="1" >
                     <input type="hidden" name="hidden_name" value="<?php echo$row["ItemName"]; ?>">
                     <input type="hidden" name="hidden_price" value="<?php echo$row["ItemPrice"]; ?>">
@@ -103,8 +108,8 @@
       ?>
 
       <div style="clear: both"></div>
-      <br />
-      <h3> Shopping Cart Details </h3>
+      <br /> <br>
+      <h3 align="center"><u> <font color="#660000">Shopping Cart Details </font> </u></h3>
       <div class="table-responsive">
         <table class="table table-bordered">
         <tr>
@@ -119,25 +124,19 @@
             if(!empty($_SESSION["Welcome"])){
               $total = 0;
               foreach ($_SESSION["Welcome"] as $keys => $value) {
-                // code...
                 ?>
               <tr>
                 <td><?php echo $value["ItemName"]; ?></td>
-                <td><?php
-                if( $value["max"]>= $value["ItemQuantity"] || $value["ItemID"]==1 || $value["ItemID"]==2)
-
-                echo $value["ItemQuantity"];
-                else {
-                  echo "enter again";
-                }
-                 ?></td>
+                <td><?php echo $value["ItemQuantity"]; ?></td>
                 <td>Rs. <?php echo $value["ItemPrice"]; ?></td>
                 <td><?php echo number_format($value["ItemQuantity"] * $value["ItemPrice"],2); ?> </td>
+
                 <td> <a href="Welcome.php?action=delete&id=<?php echo $value["ItemID"]; ?>"><span class="text-danger">Remove Item</span></a></td>
               </tr>
               <?php
                 $total = $total + ($value["ItemQuantity"] * $value["ItemPrice"]);
               }
+              $_SESSION['amount'] = $total;
                ?>
                <tr>
                  <td colspan="3" align="right">Total </td>
@@ -150,6 +149,24 @@
           </table>
           </div>
     </div>
-    <br />
+    <br><br>
+    <font color="#660000" size="5">
+    <form action = "databaseWelcome.php" method="POST">
+      <div class="form_input" align="center">
+      <p align="center">Enter Your Address</p>
+      <input type="text" name="address" placeholder="Enter Your Address" >
+      </div>
+      <br>
+      <div class="form_input" align="center">
+      <input type="submit" name="confirm" value="Confirm Your Order!">
+      </div>
+    </form>
+
+    <form action = "Welcome.php" method="POST">
+      <div class="form_input" align="center">
+      <input type="submit" name="genbill" value="Generate Your Bill">
+      </div>
+    </form>
+    </font>
 </body>
 </html>
