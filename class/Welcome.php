@@ -1,38 +1,23 @@
 <?php
-  session_start();
-  $con = mysqli_connect('localhost','root','');
-  mysqli_select_db($con,'users');
+session_start();
+$con = mysqli_connect('localhost','root','');
+mysqli_select_db($con,'users');
+ ?>
 
-  if(isset($_POST['confirm']) && !empty($_POST['confirm'])){
-
-    mysqli_select_db($con,'orders');
-     $querry= "SELECT COUNT(*) FROM orders";
-     $result2 = mysqli_query($con,$querry);
-     $row=mysqli_fetch_array($result2);
-     $row[0] += 1;
-     $temp = time();
-      mysqli_select_db($con,'orders');
-      $q = "INSERT INTO `orders`(`orderID`, `userID`, `userName`, `Address`, `Timestamp`, `Status`, `Amount`, `ExpectedTime`) VALUES ('$row[0]','$_SESSION[user_id]','$_SESSION[user_name]','$address','$temp',0,'$total',20)";
-      mysqli_query($con,$q);
-        // mysqli_select_db($con,'orders');
-        // $querry= "SELECT COUNT(*) FROM orderlist";
-        // $result2 = mysqli_query($con,$querry);
-        // $row=mysqli_fetch_array($result2);
-        // $row[0] = $row[0] + 1;
-
-      foreach ($_SESSION["Welcome"] as $keys => $value) {
-  mysqli_select_db($con,'orderlist');
-    $sql = "INSERT INTO `orderlist`(`orderID`, `itemID`, `itemQuantity`) VALUES ('$row[0]','$value[ItemID]','$value[ItemQuantity]')";
-    mysqli_query($con,$sql);
-    header("location: bill.php");
-
-  }
-}
+<?php
+      if(isset($_POST["genbill"])){
+        foreach ($_SESSION["Welcome"] as $keys => $value) {
+            mysqli_select_db($con,'users');
+            $sql = "INSERT INTO `orderlist`(`orderID`, `itemID`, `itemQuantity`) VALUES ('$_SESSION[ord_num]','$value[ItemID]','$value[ItemQuantity]')";
+            mysqli_query($con,$sql);
+        }
+      }
 ?>
 
+<font size="5"> <b> <i> <?php echo "Hello " , $_SESSION['user_name']; ?> </i> </b> </font>
 
-   <font size="5"> <b> <?php echo "Hello " , $_SESSION['user_name']; ?> </b> </font>
 <?php
+
   if(isset($_POST["add"])){
     if(isset($_SESSION["Welcome"])){
 
@@ -151,6 +136,7 @@
               <?php
                 $total = $total + ($value["ItemQuantity"] * $value["ItemPrice"]);
               }
+              $_SESSION['amount'] = $total;
                ?>
                <tr>
                  <td colspan="3" align="right">Total </td>
@@ -165,7 +151,7 @@
     </div>
     <br><br>
     <font color="#660000" size="5">
-    <form action = "Welcome.php" method= "POST">
+    <form action = "databaseWelcome.php" method="POST">
       <div class="form_input" align="center">
       <p align="center">Enter Your Address</p>
       <input type="text" name="address" placeholder="Enter Your Address" >
@@ -173,6 +159,12 @@
       <br>
       <div class="form_input" align="center">
       <input type="submit" name="confirm" value="Confirm Your Order!">
+      </div>
+    </form>
+
+    <form action = "Welcome.php" method="POST">
+      <div class="form_input" align="center">
+      <input type="submit" name="genbill" value="Generate Your Bill">
       </div>
     </form>
     </font>
