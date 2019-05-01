@@ -27,8 +27,18 @@
 <html>
 <head>
   <title>Generated Bill</title>
+  <script type="text/javascript">
+      function PrintDiv() {
+         var divToPrint = document.getElementById('divToPrint');
+         var popupWin = window.open('', '_blank', 'width=300,height=300');
+         popupWin.document.open();
+         popupWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</html>');
+          popupWin.document.close();
+      }
+   </script>
 </head>
 <body>
+  <div id="divToPrint" >
   <table align="center" border="0.25px" style="width:800px ; line-height:60px;">
     <tr>
         <th colspan="4"><h2>Core 2 Shop</h2></th>
@@ -78,15 +88,22 @@
         <td colspan="4"><h3 align="center"> Expected Time: <?php echo $extime; ?> minutes </h3> </td>
       </tr>
     </table>
-<br><br><br>
+  </div>
+<br>
+  <div align="center">
+    <input type="button" value="Click Here to Print the Bill" onclick="PrintDiv();" />
+  </div>
+
+
+
+<!-- <p align="center"> Click On the Bill to print It </p> -->
+<br><br>
 
 <form action = "signout.php" method="POST">
   <div class="form_input" align="center">
   <input type="submit" name="signout" value="Click Here to Log Out">
   </div>
 </form>
-
-
 
 </body>
 </html>

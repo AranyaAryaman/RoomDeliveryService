@@ -3,11 +3,11 @@ session_start();
 $con = mysqli_connect('localhost','root','');
 mysqli_select_db($con,'users');
 
-  $date = date_create();
+  // $date = date_create();
   //echo date_timestamp_get($date);
-
-  if(isset($_POST['confirm']) && !empty($_POST['confirm'])){
-
+if($_SESSION['amount']!= 0){
+  if(isset($_POST['confirm']) && !empty($_POST['confirm']) && $_SESSION['amount']!=0){
+      echo '<script> alert("Add some products to Cart") </script>';
        mysqli_select_db($con,'orders');
        $querry= "SELECT COUNT(*) FROM orders";
        $result2 = mysqli_query($con,$querry);
@@ -21,4 +21,11 @@ mysqli_select_db($con,'users');
        mysqli_query($con,$q);
        header("location: Welcome.php");
     }
+  }
+
+  else{
+    echo '<script> alert("Add some products to Cart") </script>';
+    header("location: Welcome.php");
+  }
+
 ?>
