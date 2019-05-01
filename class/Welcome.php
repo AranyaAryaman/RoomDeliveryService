@@ -12,13 +12,13 @@ mysqli_select_db($con,'users');
             $sql = "INSERT INTO `orderlist`(`orderID`, `itemID`, `itemQuantity`, `itemName`, `itemPrice`) VALUES ('$_SESSION[ord_num]','$value[ItemID]','$value[ItemQuantity]','$value[ItemName]','$value[ItemPrice]')";
             mysqli_query($con,$sql);
 
-            $querry2 = "SELECT  `ItemQuantity` FROM `items` WHERE ItemID = '$value[ItemID]' AND ItemName != 'Tea' AND ItemName != 'Coffee' ";
+            $querry2 = "SELECT  `ItemQuantity` FROM `items` WHERE `ItemID` = '$value[ItemID]' AND `ItemID` != 1 AND `ItemID` != 2 ";
             $result4 = mysqli_query($con,$querry2);
-            $rowm = mysqli_fetch_assoc($result4);
-
+            $rowm = mysqli_fetch_array($result4);
             $x = $rowm["ItemQuantity"] - $value['ItemQuantity'];
 
             $querry = "UPDATE `items` SET `ItemQuantity`= '$x' WHERE `ItemID` = '$value[ItemID]' ";
+            mysqli_query($con,$querry);
 
             header('location: bill.php');
         }
