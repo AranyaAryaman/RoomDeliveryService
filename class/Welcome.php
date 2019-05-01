@@ -2,7 +2,7 @@
 session_start();
 $con = mysqli_connect('localhost','root','');
 mysqli_select_db($con,'users');
- ?>
+?>
 
 <?php
       if(isset($_POST["genbill"]) ){
