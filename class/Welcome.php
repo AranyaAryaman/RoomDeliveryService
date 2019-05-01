@@ -5,7 +5,8 @@ mysqli_select_db($con,'users');
  ?>
 
 <?php
-      if(isset($_POST["genbill"])){
+      if(isset($_POST["genbill"]) ){
+        if(isset($_SESSION["Welcome"])){
         foreach ($_SESSION["Welcome"] as $keys => $value) {
             mysqli_select_db($con,'users');
             $sql = "INSERT INTO `orderlist`(`orderID`, `itemID`, `itemQuantity`, `itemName`, `itemPrice`) VALUES ('$_SESSION[ord_num]','$value[ItemID]','$value[ItemQuantity]','$value[ItemName]','$value[ItemPrice]')";
@@ -13,6 +14,10 @@ mysqli_select_db($con,'users');
             header('location: bill.php');
         }
       }
+    }
+    elseif(isset($_POST['genbill']) && !isset($_SESSION["Welcome"]) ){
+      echo '<script> alert("Add Some Products before") </script>';
+    }
 ?>
 
 <font size="5"> <b> <i> <?php echo "Hello " , $_SESSION['full_name']; ?> </i> </b> </font>

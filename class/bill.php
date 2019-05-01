@@ -77,12 +77,14 @@
       <tr>
         <td colspan="4"><h3 align="center"> Expected Time: <?php echo $extime; ?> minutes </h3> </td>
       </tr>
-
-    </form>
     </table>
 <br><br><br>
 
-
+<form action = "signout.php" method="POST">
+  <div class="form_input" align="center">
+  <input type="submit" name="signout" value="Click Here to Log Out">
+  </div>
+</form>
 
 
 
