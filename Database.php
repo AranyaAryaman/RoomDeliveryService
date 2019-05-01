@@ -11,10 +11,13 @@ $result=mysqli_query($con,$sql);
 $result2=mysqli_query($con,$exuser);
 $num=mysqli_num_rows($result);
 $num2=mysqli_num_rows($result2);
+$row=mysqli_fetch_assoc($result);
 if(isset($name)&& isset($password)&& !empty($name) && !empty($password)){
   if($num2==1){
       if($num==1){
-        $_SESSION['user_id']=$name;
+        $_SESSION['user_name']=$name;
+        $_SESSION['user_id']= $row['UserID'];
+        $_SESSION['full_name']=$row['Fullname'];
           header("Location:class/welcome.php");
           exit();
       }

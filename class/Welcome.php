@@ -8,13 +8,14 @@ mysqli_select_db($con,'users');
       if(isset($_POST["genbill"])){
         foreach ($_SESSION["Welcome"] as $keys => $value) {
             mysqli_select_db($con,'users');
-            $sql = "INSERT INTO `orderlist`(`orderID`, `itemID`, `itemQuantity`) VALUES ('$_SESSION[ord_num]','$value[ItemID]','$value[ItemQuantity]')";
+            $sql = "INSERT INTO `orderlist`(`orderID`, `itemID`, `itemQuantity`, `itemName`, `itemPrice`) VALUES ('$_SESSION[ord_num]','$value[ItemID]','$value[ItemQuantity]','$value[ItemName]','$value[ItemPrice]')";
             mysqli_query($con,$sql);
+            header('location: bill.php');
         }
       }
 ?>
 
-<font size="5"> <b> <i> <?php echo "Hello " , $_SESSION['user_name']; ?> </i> </b> </font>
+<font size="5"> <b> <i> <?php echo "Hello " , $_SESSION['full_name']; ?> </i> </b> </font>
 
 <?php
 

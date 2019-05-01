@@ -31,6 +31,7 @@ if(!empty($name) && !empty($password) && !empty($phone) && !empty($dept) && !emp
           $reg= "INSERT into accounts(`UserID`,`Fullname`, `Username`, `Password`, `Phone`, `Dept`) values ('$row[0]','$fullname','$name','$password','$phone','$dept')";
           mysqli_query($con,$reg);
           $result3 = mysqli_query($con,$reg);
+          $_SESSION['full_name']= $fullname;
           $_SESSION['user_name']= $name;
           $_SESSION['user_id']= $row[0];
           header("Location: Welcome.php");
