@@ -24,10 +24,13 @@
 ?>
 
 
-<html>
-<head>
-  <title>Generated Bill</title>
-  <script type="text/javascript">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Generated Bill</title>
+    <link rel="stylesheet" type="text/css" href="styletest.css"  />
+    <script type="text/javascript">
       function PrintDiv() {
          var divToPrint = document.getElementById('divToPrint');
          var popupWin = window.open('', '_blank', 'width=300,height=300');
@@ -36,74 +39,106 @@
           popupWin.document.close();
       }
    </script>
-</head>
-<body>
-  <div id="divToPrint" >
-  <table align="center" border="0.25px" style="width:800px ; line-height:60px;">
-    <tr>
-        <th colspan="4"><h2>Core 2 Shop</h2></th>
-    </tr>
-    <tr>
-        <th colspan="4"><h3>Invoice</h3></th>
-    </tr>
-    <tr>
-        <td colspan="1"><h3 align="left">Invoice No.: <?php echo $_SESSION['ord_num']; ?></h3></td>
-        <td colspan="2"><h3 align="left">Name: <?php echo $fullname; ?></h3></td>
-        <td colspan="1"><h3 align="left">Time: <?php echo $stamp; ?></h3></td>
-    </tr>
-    <tr>
-        <td colspan="4"><h3 align="left">Delivery Address: <?php echo $address; ?></h3></td>
-    </tr>
-    <tr>
-        <th colspan="4"><h3 align="left">Payment Mode: Cash/Paytm/Bhim </h3></th>
-    </tr>
-    <tr>
-      <th> SI. No. </th>
-      <th> Item Name</th>
-      <th> Price/Unit(in Rs.) </th>
-      <th> Selected Quantity </th>
-    </tr>
-    <?php
+  </head>
+
+  <body background="bill.jpg">
+    <header class="clearfix">
+      <div id="logo">
+        <img src="logoiitg.png">
+      </div>
+      <div id="company">
+        <h2 class="name">General Shop</h2>
+        <div>Core 2</div>
+        <div>0751-4086908</div>
+
+      </div>
+      </div>
+    </header>
+    <main>
+      <div id="divToPrint">
+      <div id="details" class="clearfix">
+        <div id="client">
+          <div class="to">INVOICE TO:</div>
+          <h2 class="name"><?php echo $fullname; ?></h2>
+          <div class="address"><?php echo $address; ?></div>
+          <div class="email">Customer ID <?php echo $_SESSION['user_id']; ?></div>
+
+        </div>
+        <div id="invoice">
+          <h1>INVOICE NO <?php echo $_SESSION['ord_num']; ?></h1>
+          <div class="date">Date of Invoice and Time : <?php echo $stamp; ?></div>
+
+        </div>
+      </div>
+      <table border="0" cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <th class="no">SI. No.</th>
+            <th class="desc">DESCRIPTION</th>
+            <th class="unit">UNIT PRICE</th>
+            <th class="qty">QUANTITY</th>
+
+          </tr>
+        </thead>
+        <tbody>
+
+          <?php
     $i=1;
 
         while ($row = mysqli_fetch_assoc($result2))
         {
 
           ?>
-        <tr align="center">
-          <td>  <?php echo $i; ?> </td>
-          <td>  <?php echo $row['itemName']; ?> </td>
-          <td>  <?php echo $row['itemPrice']; ?> </td>
-          <td>  <?php echo $row['itemQuantity']; ?> </td>
+        <tr>
+          <td class="no">  <?php echo $i; ?> </td>
+          <td class="desc">  <?php echo $row['itemName']; ?> </td>
+          <td class="unit">  <?php echo $row['itemPrice']; ?> </td>
+          <td class="qty">  <?php echo $row['itemQuantity']; ?> </td>
         </tr>
         <?php
           $i+=1;
       }
       ?>
-      <tr>
-        <td colspan="2"> <h3 align="center"> Status: <?php if($stat==0) echo "Incomplete"; else echo "Delivered"; ?>  <h3> </td>
-        <td  colspan="2"> <h2 align="right"> Total Amount:  Rs.<?php echo $_SESSION['amount']; ?> </h2></td>
-      </tr>
-      <tr>
-        <td colspan="4"><h3 align="center"> Expected Time: <?php echo $extime; ?> minutes </h3> </td>
-      </tr>
-    </table>
-  </div>
-<br>
-  <div align="center">
-    <input type="button" value="Click Here to Print the Bill" onclick="PrintDiv();" />
-  </div>
+        </tbody>
+        <tfoot>
 
 
 
-<!-- <p align="center"> Click On the Bill to print It </p> -->
-<br><br>
 
-<form action = "signout.php" method="POST">
-  <div class="form_input" align="center">
+          <tr>
+            <td colspan="1"></td>
+            <td colspan="2">STATUS :  </td>
+            <td><?php if($stat==0) echo "Incomplete"; else echo "Delivered"; ?></td>
+          </tr>
+          <tr>
+            <td colspan="1"></td>
+            <td colspan="2">EXPECTED TIME : </td>
+            <td><?php echo $extime; ?></td>
+          </tr>
+          <tr>
+            <td colspan="1"></td>
+            <td colspan="2">GRAND TOTAL : </td>
+            <td><?php echo $_SESSION['amount']; ?></td>
+          </tr>
+        </tfoot>
+      </table>
+      <div id="thanks">Thank you!</div>
+
+      </div>
+    </main>
+
+    <div class="form_input" align="center">
+    <input type="submit" value="Click Here to Print the Bill" onclick="PrintDiv();" />
+
+
+    <br></br>
+
+      <form action = "signout.php" method="POST">
   <input type="submit" name="signout" value="Click Here to Log Out">
   </div>
 </form>
-
-</body>
+    <footer>
+      Invoice was created on a computer and is valid without the signature and seal.
+    </footer>
+  </body>
 </html>

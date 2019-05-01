@@ -1,0 +1,81 @@
+<?php
+session_start();
+$con = mysqli_connect('localhost','root','');
+mysqli_select_db($con,'users');
+?>
+
+<?php
+
+  if(isset($_POST["accept"])){
+      $id = $_POST['id'];
+      $query = "UPDATE `orders` SET `Status`='1' WHERE `orderID` = '$id' ";
+      $res = mysqli_query($con,$query);
+      echo '<script>alert("Order Accepted")</script>';
+  }
+
+?>
+
+<html>
+<head>
+  <title>Accept Orders</title>
+</head>
+<body>
+
+  <div class="container" style="width:700px;">
+    <h1 class="w3-container text-uppercase" align="center">Core 2 Shop</h1>
+		</br>
+		<h2 class="w3-container text-light">Accept Orders</h2>
+		<table class="table table-hover table-dark w3-animate-bottom">
+		<thead class="thead-light">
+		  <tr>
+        <th>Order ID</th>
+				<th>User Name</th>
+				<th>Delivery Address</th>
+				<th>Time of Order</th>
+        <th>Amount</th>
+        <th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
+
+  <?php
+      $query = "SELECT * FROM orders WHERE Status = 0 ";
+      $result = mysqli_query($con,$query);
+
+      if(!$result){
+        exit(mysqli_error($con));
+      }
+
+      $num = mysqli_num_rows($result);
+
+      if($num >0){
+          while($row = mysqli_fetch_assoc($result))
+          {
+            ?>
+            <tr>
+            <td><?php echo $row['orderID'];?></td>
+						 <td><?php echo $row['userName'];?></td>
+						 <td><?php echo $row['Address'];?></td>
+             <td> <?php echo $row['Timestamp'];?></td>
+             <td> <?php echo $row['Amount'];?></td>
+						 <td>
+            <form action="accept.php" method="post">
+              <input type="hidden" name="id" value="<?php echo $row['orderID'];?>">
+              <button type = "submit" name="accept" class="btn btn-primary">Accept Order</button>
+            </form>
+             </td>
+             <?php
+          }
+        }
+        ?>
+        </tbody>
+      </table>
+
+      <form action="view.php" method="post">
+        <input type="hidden" name="nextid" value="<?php echo $row['orderID'];?>">
+        <button type = "submit" name="view" class="btn btn-primary">View Detailed Orders</button>
+      </form>
+
+</html>
+</body>
+</html>
