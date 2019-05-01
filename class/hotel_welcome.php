@@ -16,6 +16,11 @@
   elseif(isset($_POST['addstack'])){
     header("location: addstack.php");
   }
+
+  elseif(isset($_POST['seelist'])){
+    header("location: list_products.php");
+  }
+
 ?>
 
 
@@ -46,6 +51,12 @@
   <form action = "hotel_welcome.php" method="POST">
     <div class="form_input" align="center">
     <input type="submit" name="addstack" value="Add Items">
+    </div>
+  </form>
+
+  <form action = "hotel_welcome.php" method="POST">
+    <div class="form_input" align="center">
+    <input type="submit" name="seelist" value="More Stock Required">
     </div>
   </form>
 
