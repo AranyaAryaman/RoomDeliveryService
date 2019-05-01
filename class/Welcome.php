@@ -138,7 +138,7 @@ mysqli_select_db($con,'users');
         <?php
             if(!empty($_SESSION["Welcome"])){
               $total = 0;
-              $time = 0;
+              $time = 2;
               foreach ($_SESSION["Welcome"] as $keys => $value) {
                   if($value["ItemName"] == 'Tea' || $value["ItemName"] == 'Coffee'){
                       $time = $time + $value["ItemQuantity"];
@@ -188,5 +188,12 @@ mysqli_select_db($con,'users');
       </div>
     </form>
     </font>
+
+    <form action = "signout.php" method="POST">
+    <div class="form_input" align="center">
+      <input type="submit" name="signout" value="Click Here to Log Out">
+    </div>
+    </form>
+    
 </body>
 </html>

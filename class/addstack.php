@@ -19,6 +19,10 @@
     // }
   }
 
+  if(isset($_POST['goback'])){
+    header("location: hotel_welcome.php");
+  }
+
 ?>
 
 <html>
@@ -49,6 +53,11 @@
   </div>
   <br></br>
   <input type="submit" name="itemadd" value="Add Item">
+</form>
+
+<form action = "view.php" method="POST">
+<input type="submit" name="goback" value="Click Here to Go Back">
+</div>
 </form>
 
 </body>

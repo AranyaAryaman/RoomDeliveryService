@@ -2,6 +2,11 @@
 session_start();
 $con = mysqli_connect('localhost','root','');
 mysqli_select_db($con,'users');
+
+if(isset($_POST['goback'])){
+  header("location: hotel_welcome.php");
+}
+
 ?>
 
 <!-- <?php
@@ -61,7 +66,10 @@ mysqli_select_db($con,'users');
           }
         }
   ?>
-
+  <form action = "view.php" method="POST">
+  <input type="submit" name="goback" value="Click Here to Go Back">
+  </div>
+  </form>
 
 
 </table>

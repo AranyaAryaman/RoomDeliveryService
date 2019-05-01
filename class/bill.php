@@ -108,12 +108,12 @@
           <tr>
             <td colspan="1"></td>
             <td colspan="2">STATUS :  </td>
-            <td><?php if($stat==0) echo "Incomplete"; else echo "Delivered"; ?></td>
+            <td><?php if($stat==0) echo "Not Accepted"; else echo "Accepted"; ?></td>
           </tr>
           <tr>
             <td colspan="1"></td>
-            <td colspan="2">EXPECTED TIME : </td>
-            <td><?php echo $extime; ?></td>
+            <td colspan="2"><b>EXPECTED TIME AFTER ORDER IS ACCEPTED: </b></td>
+            <td><?php echo $_SESSION['time']; ?> minutes</td>
           </tr>
           <tr>
             <td colspan="1"></td>
@@ -129,11 +129,12 @@
 
     <div class="form_input" align="center">
     <input type="submit" value="Click Here to Print the Bill" onclick="PrintDiv();" />
-
+  </div>
 
     <br></br>
 
       <form action = "signout.php" method="POST">
+        <div class="form_input" align="center">
   <input type="submit" name="signout" value="Click Here to Log Out">
   </div>
 </form>

@@ -30,7 +30,7 @@
    <link rel="stylesheet" href="hotel_welcome.css" media="all" />
 </head>
 <body>
-	<br></br><br></br><br></br>
+	<br></br><br></br><br></br><br></br><br></br><br></br><br></br>
 
   <form action = "hotel_welcome.php" method="POST">
     <div class="form_input" align="center">
@@ -59,6 +59,12 @@
   <form action = "hotel_welcome.php" method="POST">
     <div class="form_input" align="center">
     <input type="submit" name="seelist" value="More Stock Required">
+    </div>
+  </form>
+
+  <form action = "signout.php" method="POST">
+    <div class="form_input" align="center">
+    <input type="submit" name="signout" value="Log Out">
     </div>
   </form>
 

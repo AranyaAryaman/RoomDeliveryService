@@ -14,6 +14,10 @@ mysqli_select_db($con,'users');
       echo '<script>alert("Quantity Updated")</script>';
   }
 
+  if(isset($_POST['goback'])){
+    header("location: hotel_welcome.php");
+  }
+
 ?>
 
 <html>
@@ -27,7 +31,7 @@ mysqli_select_db($con,'users');
     <h1 class="w3-container text-uppercase" align="center">Core 2 Shop</h1>
 		</br>
 		<h2 class="w3-container text-light" align ="center">Update your Stack</h2>
-    
+
 		<table class="table table-hover table-dark w3-animate-bottom">
 		<thead class="thead-light">
 		  <tr>
@@ -70,8 +74,11 @@ mysqli_select_db($con,'users');
         ?>
         </tbody>
       </table>
-    
 
+      <form action = "view.php" method="POST">
+      <input type="submit" name="goback" value="Click Here to Go Back">
+      </div>
+      </form>
 
 
 

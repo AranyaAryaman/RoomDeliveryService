@@ -14,6 +14,10 @@ mysqli_select_db($con,'users');
       echo '<script>alert("Quantity Updated")</script>';
   }
 
+  if(isset($_POST['goback'])){
+    header("location: hotel_welcome.php");
+  }
+
 ?>
 
 <html>
@@ -74,5 +78,9 @@ mysqli_select_db($con,'users');
 
 
 </table>
+<form action = "view.php" method="POST">
+<input type="submit" name="goback" value="Click Here to Go Back">
+</div>
+</form>
 </body>
 </html>

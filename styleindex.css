@@ -15,11 +15,11 @@ body{
 {
   border: none;
   outline: none;
-  height: 50px;
+  height: 80px;
   background: #008000;
   color: #fff;
-  font-size: 30px;
-  border-radius: 10px;
+  font-size: 60px;
+  border-radius: 20px;
 }
 
 .form_input input[type="submit"]:hover{
