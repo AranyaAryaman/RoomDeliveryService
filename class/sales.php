@@ -4,18 +4,6 @@ $con = mysqli_connect('localhost','root','');
 mysqli_select_db($con,'users');
 ?>
 
-<?php
-
-  if(isset($_POST['update'])){
-      $id = $_POST['id'];
-      $updated= $_POST['new_quantity'];
-      $query = "UPDATE `items` SET `ItemQuantity`='$updated' WHERE `ItemID` = '$id'";
-      $res = mysqli_query($con,$query);
-      echo '<script>alert("Quantity Updated")</script>';
-  }
-
-?>
-
 <html>
 <head>
   <title>Detailed Orders</title>
@@ -57,7 +45,7 @@ mysqli_select_db($con,'users');
       $result = mysqli_query($con,$query);
       }
       else{
-        $query = "SELECT * FROM orders WHERE `Timestamp` >= date() AND `Timestamp` <= '$_POST[to]'";
+        $query = "SELECT * FROM orders WHERE `Timestamp` >= 'date()' ";
         $result = mysqli_query($con,$query);
       }
         if(!$result){
@@ -67,18 +55,18 @@ mysqli_select_db($con,'users');
       $num = mysqli_num_rows($result);
 
       if($num >0){
-          while($row = mysqli_fetch_assoc($result))
+          while($rown = mysqli_fetch_assoc($result))
           {
             ?>
             <tr>
-            <td><?php echo $row['Timestamp'];?></td>
-						 <td><?php echo $row['userName'];?></td>
-						 <td><?php echo $row['orderID'];?></td>
-						 <td><?php echo $row['Amount'];?></td>
+            <td><?php echo $rown['Timestamp'];?></td>
+						 <td><?php echo $rown['userName'];?></td>
+						 <td><?php echo $rown['orderID'];?></td>
+						 <td><?php echo $rown['Amount'];?></td>
              <td>
              <form action="sales.php" method="post">
-               <input type="hidden" name="id" value="<?php echo $row['orderID'];?>">
-               <button type = "submit" name="accept" class="btn btn-primary">Accept Order</button>
+               <input type="hidden" name="id" value="<?php echo $rown['orderID'];?>">
+               <button type = "submit" name="view_detailed" class="btn btn-primary">View Detailed</button>
              </form>
             </td>
              </tbody>
@@ -87,6 +75,70 @@ mysqli_select_db($con,'users');
         }
       }
   ?>
+
+</table>
+
+<br><br><br><br>
+
+<div class="container" style="width:700px;">
+  <h1 class="w3-container text-uppercase" align="center">Core 2 Shop</h1>
+  </br>
+  <h2 class="w3-container text-light"> Detailed Orders</h2>
+
+
+  <table class="table table-hover table-dark w3-animate-bottom">
+  <thead class="thead-light">
+    <tr>
+      <th>Date & Time</th>
+      <th>Customer Name</th>
+      <th>Order ID</th>
+      <th>Amount</th>
+      <th>Item ID</th>
+      <th>Item Names</th>
+      <th>Quantity</th>
+      <th>Item Price</th>
+
+    </tr>
+  </thead>
+
+<?php
+    if(isset($_POST["view_detailed"])){
+    ?>
+      <tbody>
+      <?php
+      $id = $_POST['id'];
+      $query = "SELECT * FROM orderlist WHERE `orderID` = '$id' ";
+      $result = mysqli_query($con,$query);
+
+      $query2 = "SELECT * FROM orders WHERE `orderID` = '$id' ";
+      $result2 = mysqli_query($con,$query2);
+      $rown = mysqli_fetch_assoc($result2);
+
+    if(!$result){
+      exit(mysqli_error($con));
+    }
+
+    $num = mysqli_num_rows($result);
+
+    if($num >0){
+        while($row = mysqli_fetch_assoc($result))
+        {
+          ?>
+          <tr>
+            <td><?php echo $rown['Timestamp'];?></td>
+             <td><?php echo $rown['userName'];?></td>
+             <td><?php echo $rown['orderID'];?></td>
+             <td><?php echo $rown['Amount'];?></td>
+          <td><?php echo $row['itemID'];?></td>
+           <td><?php echo $row['itemName'];?></td>
+           <td><?php echo $row['itemQuantity'];?></td>
+           <td><?php echo $row['itemPrice'];?></td>
+           </tbody>
+          <?php
+        }
+      }
+        }
+?>
 
 </table>
 </body>

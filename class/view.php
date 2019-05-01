@@ -4,7 +4,7 @@ $con = mysqli_connect('localhost','root','');
 mysqli_select_db($con,'users');
 ?>
 
-<?php
+<!-- <?php
 
   if(isset($_POST['update'])){
       $id = $_POST['id'];
@@ -14,7 +14,7 @@ mysqli_select_db($con,'users');
       echo '<script>alert("Quantity Updated")</script>';
   }
 
-?>
+?> -->
 
 <html>
 <head>
@@ -71,6 +71,7 @@ mysqli_select_db($con,'users');
         }
           }
   ?>
+
 
 
 </table>
