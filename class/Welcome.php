@@ -11,6 +11,15 @@ mysqli_select_db($con,'users');
             mysqli_select_db($con,'users');
             $sql = "INSERT INTO `orderlist`(`orderID`, `itemID`, `itemQuantity`, `itemName`, `itemPrice`) VALUES ('$_SESSION[ord_num]','$value[ItemID]','$value[ItemQuantity]','$value[ItemName]','$value[ItemPrice]')";
             mysqli_query($con,$sql);
+
+            $querry2 = "SELECT  `ItemQuantity` FROM `items` WHERE ItemID = '$value[ItemID]' AND ItemName != 'Tea' AND ItemName != 'Coffee' ";
+            $result4 = mysqli_query($con,$querry2);
+            $rowm = mysqli_fetch_assoc($result4);
+
+            $x = $rowm["ItemQuantity"] - $value['ItemQuantity'];
+
+            $querry = "UPDATE `items` SET `ItemQuantity`= '$x' WHERE `ItemID` = '$value[ItemID]' ";
+
             header('location: bill.php');
         }
       }
@@ -129,7 +138,11 @@ mysqli_select_db($con,'users');
         <?php
             if(!empty($_SESSION["Welcome"])){
               $total = 0;
+              $time = 0;
               foreach ($_SESSION["Welcome"] as $keys => $value) {
+                  if($value["ItemName"] == 'Tea' || $value["ItemName"] == 'Coffee'){
+                      $time = $time + $value["ItemQuantity"];
+                  }
                 ?>
               <tr>
                 <td><?php echo $value["ItemName"]; ?></td>
@@ -143,6 +156,7 @@ mysqli_select_db($con,'users');
                 $total = $total + ($value["ItemQuantity"] * $value["ItemPrice"]);
               }
               $_SESSION['amount'] = $total;
+              $_SESSION['time'] = $time;
                ?>
                <tr>
                  <td colspan="3" align="right">Total </td>

@@ -17,7 +17,11 @@ if($_SESSION['amount']!= 0){
        $_SESSION['ord_num'] = $row[0];
        $_SESSION['deliver'] = $_POST['address'];
        mysqli_select_db($con,'orders');
-       $q = "INSERT INTO `orders`(`orderID`, `userID`, `userName`, `Address`, `Status`, `Amount`, `ExpectedTime`) VALUES ('$row[0]','$_SESSION[user_id]','$_SESSION[user_name]','$_POST[address]',0,'$_SESSION[amount]',20)";
+
+
+
+
+       $q = "INSERT INTO `orders`(`orderID`, `userID`, `userName`, `Address`, `Status`, `Amount`, `ExpectedTime`) VALUES ('$row[0]','$_SESSION[user_id]','$_SESSION[user_name]','$_POST[address]',0,'$_SESSION[amount]','$_SESSION[time]')";
        mysqli_query($con,$q);
        header("location: Welcome.php");
     }
