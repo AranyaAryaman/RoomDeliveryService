@@ -6,16 +6,13 @@ mysqli_select_db($con,'users');
 
 <?php
 
-  if(isset($_POST["accept"]) && isset($_SESSION['accept'])){
+  if(isset($_POST["accept"])){
       $id = $_POST['id'];
       $query = "UPDATE `orders` SET `Status`='1' WHERE `orderID` = '$id' ";
       $res = mysqli_query($con,$query);
       echo '<script>alert("Order Accepted")</script>';
   }
 
-  if(isset($_POST['goback'])){
-    header("location: hotel_welcome.php");
-  }
 
 ?>
 
@@ -83,8 +80,8 @@ mysqli_select_db($con,'users');
         </tbody>
       </table>
 
-      <form action = "view.php" method="POST">
-      <input type="submit" name="goback" value="Click Here to Go Back">
+      <form action = "signout.php" method="POST">
+      <input type="submit" name="goback" value="Click Here to Sign Out">
       </div>
       </form>
 

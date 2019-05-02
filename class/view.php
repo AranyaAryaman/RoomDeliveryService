@@ -15,7 +15,7 @@ mysqli_select_db($con,'users');
   }
 
   if(isset($_POST['goback'])){
-    header("location: hotel_welcome.php");
+    header("location: accept.php");
   }
 
 ?>

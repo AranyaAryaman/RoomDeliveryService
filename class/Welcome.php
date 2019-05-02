@@ -19,6 +19,8 @@ mysqli_select_db($con,'users');
 
             $querry = "UPDATE `items` SET `ItemQuantity`= '$x' WHERE `ItemID` = '$value[ItemID]' ";
             mysqli_query($con,$querry);
+            $querry4 = "UPDATE `items` SET `ItemQuantity`= 'Unlimited' WHERE `ItemID` = 1 OR `ItemID` = 2 ";
+            mysqli_query($con,$querry4);
 
             header('location: bill.php');
         }
@@ -95,7 +97,7 @@ mysqli_select_db($con,'users');
       <h2 align="center"><font color="#660000"><u> Place Your Order </u> </font> </h2>
       <br>
     <?php
-        $query = "SELECT * FROM items WHERE ItemQuantity > 0 OR ItemQuantity = 'Unlimited' ";
+        $query = "SELECT * FROM items WHERE ItemQuantity > 0 OR ItemID = 1 OR ItemID = 2 ";
         $result = mysqli_query($con,$query);
         $num = mysqli_num_rows($result);
 
@@ -194,6 +196,6 @@ mysqli_select_db($con,'users');
       <input type="submit" name="signout" value="Click Here to Log Out">
     </div>
     </form>
-    
+
 </body>
 </html>
