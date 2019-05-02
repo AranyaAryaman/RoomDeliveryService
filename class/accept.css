@@ -1,0 +1,92 @@
+@font-face {
+  font-family: SourceSansPro;
+  src: url(SourceSansPro-Regular.ttf);
+}
+body{
+  margin: 0;
+  padding: 0;
+  color:#B22222;
+  background: url(stock.jpg);
+  background-size: cover;
+  background-position: bottom;
+  font-family: sans-serif;
+}
+table {
+  width: 100%;
+
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 20px;
+}
+
+table th,
+table td {
+  padding: 20px;
+  background: #EEEEEE;
+  text-align: center;
+  border-bottom: 1px solid #FFFFFF;
+}
+
+table th {
+  white-space: nowrap;        
+  font-weight: normal;
+}
+
+table td {
+  text-align: right;
+}
+
+table td h3{
+  color: #57B223;
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 0 0 0.2em 0;
+}
+
+table .no {
+  color: #FFFFFF;
+  font-size: 1.6em;
+  background: #57B223;
+}
+
+table .desc {
+  text-align: left;
+}
+
+table .unit {
+  background: #DDDDDD;
+}
+
+table .qty {
+}
+
+table .total {
+  background: #57B223;
+  color: #FFFFFF;
+}
+
+table td.unit,
+table td.qty,
+table td.total {
+  font-size: 1.2em;
+}
+
+table tbody tr:last-child td {
+  border: none;
+}
+.form_input input[type="submit"]
+{
+  border: none;
+  outline: none;
+  height: 50px;
+  background: #008000;
+  color: #fff;
+  font-size: 30px;
+  border-radius: 10px;
+}
+
+.form_input input[type="submit"]:hover{
+  cursor: pointer;
+  background: #ffc107;
+  color: #000;
+}

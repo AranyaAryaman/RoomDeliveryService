@@ -108,11 +108,11 @@
           <tr>
             <td colspan="1"></td>
             <td colspan="2">STATUS :  </td>
-            <td><?php if($stat==0) echo "Incomplete"; else echo "Accepted"; ?></td>
+            <td><?php if($stat==0) echo "Incomplete"; else echo "Delivered"; ?></td>
           </tr>
           <tr>
             <td colspan="1"></td>
-            <td colspan="2"><b>EXPECTED TIME AFTER ORDER IS ACCEPTED: </b></td>
+            <td colspan="2">EXPECTED TIME : </td>
             <td><?php echo $extime; ?></td>
           </tr>
           <tr>

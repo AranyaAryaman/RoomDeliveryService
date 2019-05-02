@@ -27,8 +27,10 @@
 <html>
 <head>
   <title> WELCOME PAGE </title>
+   <link rel="stylesheet" href="hotel_welcome.css" media="all" />
 </head>
 <body>
+	<br></br><br></br><br></br>
 
   <form action = "hotel_welcome.php" method="POST">
     <div class="form_input" align="center">

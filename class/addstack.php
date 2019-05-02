@@ -24,6 +24,7 @@
 <html>
 <head>
   <title>Add Stock </title>
+  <link rel="stylesheet" href="addstack.css" media="all" />
 </head>
 <body>
  <form action="addstack.php" method="POST" >
@@ -46,6 +47,7 @@
   <p>Preparation Time</p>
   <input type="text" name="itempreptime" placeholder="Preparation Time of Item">
   </div>
+  <br></br>
   <input type="submit" name="itemadd" value="Add Item">
 </form>
 

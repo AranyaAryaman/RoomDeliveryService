@@ -17,14 +17,15 @@ mysqli_select_db($con,'users');
 
 <html>
 <head>
-  <title>Accept Orders</title>
+  <title align = "center" >Accept Orders</title>
+  <link rel="stylesheet" href="accept.css" media="all" />
 </head>
 <body>
 
   <div class="container" style="width:700px;">
     <h1 class="w3-container text-uppercase" align="center">Core 2 Shop</h1>
 		</br>
-		<h2 class="w3-container text-light">Accept Orders</h2>
+		<h2 class="w3-container text-light"align ="center">Accept Orders</h2>
 		<table class="table table-hover table-dark w3-animate-bottom">
 		<thead class="thead-light">
 		  <tr>
@@ -72,8 +73,10 @@ mysqli_select_db($con,'users');
       </table>
 
       <form action="view.php" method="post">
+        <div class="form_input" >
         <input type="hidden" name="nextid" value="<?php echo $row['orderID'];?>">
         <button type = "submit" name="view" class="btn btn-primary">View Detailed Orders</button>
+      </div>
       </form>
 
 </html>

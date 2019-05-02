@@ -7,13 +7,14 @@ mysqli_select_db($con,'users');
 <html>
 <head>
   <title>Detailed Orders</title>
+  <link rel="stylesheet" href="sales.css" media="all" />
 </head>
 <body>
 
   <div class="container" style="width:700px;">
     <h1 class="w3-container text-uppercase" align="center">Core 2 Shop</h1>
 		</br>
-		<h2 class="w3-container text-light">View Detailed Orders</h2>
+		<h2 class="w3-container text-light" align ="center">View Detailed Orders</h2>
     <br><br><br>
     <h3>
     <form action="sales.php" method="post">
@@ -81,9 +82,9 @@ mysqli_select_db($con,'users');
 <br><br><br><br>
 
 <div class="container" style="width:700px;">
-  <h1 class="w3-container text-uppercase" align="center">Core 2 Shop</h1>
+  
   </br>
-  <h2 class="w3-container text-light"> Detailed Orders</h2>
+  <h2 class="w3-container text-light" align = "center"> Detailed Orders</h2>
 
 
   <table class="table table-hover table-dark w3-animate-bottom">

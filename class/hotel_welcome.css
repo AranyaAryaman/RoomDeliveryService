@@ -1,0 +1,29 @@
+@font-face {
+  font-family: SourceSansPro;
+  src: url(SourceSansPro-Regular.ttf);
+}
+body{
+  margin: 0;
+  padding: 0;
+  background: url(welcome.jpg);
+  background-size: cover;
+  background-position: bottom;
+  font-family: sans-serif;
+}
+
+.form_input input[type="submit"]
+{
+  border: none;
+  outline: none;
+  height: 50px;
+  background: #008000;
+  color: #fff;
+  font-size: 30px;
+  border-radius: 10px;
+}
+
+.form_input input[type="submit"]:hover{
+  cursor: pointer;
+  background: #ffc107;
+  color: #000;
+}
